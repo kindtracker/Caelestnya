@@ -318,6 +318,8 @@ input[type=number] {
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .PropertyCategory {
@@ -331,6 +333,10 @@ input[type=number] {
   cursor: pointer;
   user-select: none;
   border-bottom: 1px solid var(--Surface0);
+  margin-top: 6px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 6px 6px 0px 0px;
+  border-radius: 6px 6px 0px 0px; 
 }
 
 .PropertyCategoryArrow {
@@ -345,6 +351,8 @@ input[type=number] {
   align-items: center;
   min-height: 27px;
   border-bottom: 1px solid var(--Mantle);
+  border-radius: 0;
+  border: 0.5px solid var(--Overlay0);
 }
 
 .PropertyRow:hover {
@@ -380,6 +388,15 @@ input[type=number] {
 
 .PropertyValue[readonly] {
   color: var(--Subtext0);
+}
+
+.PropertyValue[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  justify-self: start;
+  margin-left: 6px;
+  background-color: var(--Overlay0);
+  border: 1px solid var(--Overlay0);
 }
 
 .PropertyEmpty {
