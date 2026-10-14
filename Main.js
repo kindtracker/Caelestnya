@@ -6,6 +6,11 @@ function CreateExplorerFile(Name) {
   const ExplorerFile = document.createElement("div");
   ExplorerFile.className = "ExplorerFile";
 
+  const CollapseText = document.createElement("div");
+  CollapseText.className = "ExplorerFileCollapse";
+  CollapseText.textContent = ">";
+  ExplorerFile.appendChild(CollapseText);
+
   const Icon = document.createElement("img");
   Icon.className = "ExplorerFileIcon";
   Icon.src = "RobloxIcons/Unknown.png";
