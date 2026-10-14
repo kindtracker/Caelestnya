@@ -9,6 +9,8 @@
   </head>
   <body>
     <div class="ToolBar">
+      <div class="PanelDragHandle" title="Drag toolbar">⠿</div>
+
       <button class="ToolBarButton" title="Cursor">
         <img src="RobloxIcons/Cursor.png">
       </button>
@@ -24,9 +26,34 @@
       <button class="ToolBarButton" title="Rotate">
         <img src="RobloxIcons/Rotate.png">
       </button>
+
+      <div class="ToolBarSeparator"></div>
+
+      <label class="ToolBarValue" title="Move increment">
+        <img src="RobloxIcons/Move.png" alt="">
+        <input type="number" value="1" min="0" step="1">
+        <span>Units</span>
+      </label>
+
+      <label class="ToolBarValue" title="Rotation increment">
+        <img src="RobloxIcons/Rotate.png" alt="">
+        <input type="number" value="45" min="0" max="360" step="45">
+        <span>Degrees</span>
+      </label>
     </div>
 
     <div class="Explorer">
+      <div class="PanelTitleBar">
+        <div class="PanelDragHandle" title="Drag Explorer">⠿</div>
+        <span class="PanelTitleItem active">
+          Explorer
+        </span>
+
+        <span class="PanelTitleItem">
+          Toolbox
+        </span>
+      </div>
+
       <div class="ExplorerSearch">
         <input
           class="ExplorerSearchInput"
@@ -34,6 +61,21 @@
           placeholder="Filter instances..."
         >
       </div>
+    </div>
+
+    <div class="Game">
+      <div class="PanelTitleBar">
+        <div class="PanelDragHandle" title="Drag Explorer">⠿</div>
+        <span class="PanelTitleItem active">
+          Faculty
+        </span>
+
+        <span class="PanelTitleItem">
+          LocalScript
+        </span>
+      </div>
+
+      <img src="TemplateGame.png"></img>
     </div>
 
     <script src="Main.js"></script>
