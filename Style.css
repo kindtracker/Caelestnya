@@ -51,6 +51,7 @@ input[type=number] {
 
 .ExplorerFile {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 5px;
   width: 100%;
@@ -61,8 +62,10 @@ input[type=number] {
 }
 
 .ExplorerFileChildren {
+  display: block;
+  flex: 0 0 100%;
   width: 100%;
-  padding-left: 12px;
+  padding-left: 16px;
   box-sizing: border-box;
 }
 
@@ -383,4 +386,11 @@ input[type=number] {
   padding: 12px;
   text-align: center;
   color: var(--Subtext0);
+}
+
+.Car {
+  position: relative;
+  left: 10%;
+  width: 80%;
+  height: 70%;
 }

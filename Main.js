@@ -1,4 +1,4 @@
-const Explorer = document.querySelector(".Explorer");
+const Explorer = document.querySelector(".ExplorerChildren");
 const PropertiesTable = document.querySelector(".PropertiesTable");
 const PropertiesSearch = document.querySelector(".SearchBarInput");
 
