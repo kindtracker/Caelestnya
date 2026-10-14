@@ -14,7 +14,6 @@ function CreateExplorerFile(Name) {
   const Icon = document.createElement("img");
   Icon.className = "ExplorerFileIcon";
   Icon.src = "RobloxIcons/Unknown.png";
-  Icon.alt = "";
   ExplorerFile.appendChild(Icon);
 
   const Label = document.createElement("span");

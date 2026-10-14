@@ -8,7 +8,7 @@ os.execute("rm -rf RobloxIcons/RobloxCustom")
 os.execute("rm -rf RobloxIcons/RobloxCustom/standard")
 
 os.execute(
-	'wget -O RobloxIcons/Play.png "https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/5X/d/0/d/4/d0d410c6566a48e77bffb13b34e3967a9494418a.png"'
+	'wget -O RobloxIcons/Cursor.png "https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/5X/d/0/d/4/d0d410c6566a48e77bffb13b34e3967a9494418a.png"'
 )
 os.execute(
 	'wget -O RobloxIcons/Rotate.png "https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/5X/e/4/3/0/e430d04eb9bf9e1e2081d7133ff1cfe89de1e737.png"'
