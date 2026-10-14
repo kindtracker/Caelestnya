@@ -6,3 +6,7 @@ os.execute("mv RobloxIcons/RobloxCustom/standard/* RobloxIcons/")
 os.execute("sleep 0.1")
 os.execute("rm -rf RobloxIcons/RobloxCustom")
 os.execute("rm -rf RobloxIcons/RobloxCustom/standard")
+
+os.execute(
+	"wget -O Fonts/NotoSansRegular.ttf Fonts/https://github.com/openmaptiles/fonts/raw/refs/heads/master/noto-sans/NotoSans-Regular.ttf"
+)

@@ -1,21 +1,45 @@
+@font-face {
+  font-family: "Noto Sans";
+  src: url("./Fonts/NotoSansRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --FontUI: "Noto Sans", sans-serif;
+}
+
 body {
+  font-family: var(--FontUI);
   background-color: var(--Base);
   color: var(--Text);
   margin: 0;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .Explorer {
-  left: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 15vw;
-  height: 100vw;
+  height: 100vh;
   background-color: var(--Surface0);
+  font-weight: 500;
 }
 
 .ExplorerFile {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   width: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 .ExplorerFileIcon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
