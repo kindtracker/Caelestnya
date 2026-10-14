@@ -1,0 +1,21 @@
+body {
+  background-color: var(--Base);
+  color: var(--Text);
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.Explorer {
+  left: 0px;
+  width: 15vw;
+  height: 100vw;
+  background-color: var(--Surface0);
+}
+
+.ExplorerFile {
+  width: 100%;
+}
+
+.ExplorerFileIcon {
+}
