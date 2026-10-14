@@ -53,3 +53,28 @@ body {
   color: var(--Subtext0);
   font-weight: 1000;
 }
+
+.ExplorerSearch {
+  padding: 8px;
+}
+
+.ExplorerSearchInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--Subtext1) 30%, white);
+  background-color: var(--Surface1);
+  border: 0px;
+  border-radius: 5px;
+  outline: none;
+  font-weight: 600;
+}
+
+.ExplorerSearchInput::placeholder {
+  color: var(--Subtext0);
+}
+
+.ExplorerSearchInput:focus {
+  border-color: var(--Mauve);
+}
