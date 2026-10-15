@@ -39,21 +39,52 @@ input[type=number] {
 
 .Explorer {
   --FontSize: 14px;
+  display: flex;
   width: 256px;
   height: 50%;
   background-color: var(--Surface0);
   font-weight: 500;
   border: 1px solid color-mix(in srgb, var(--Overlay1) 80%, #000);
   box-sizing: border-box;
-  overflow-x: hidden;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ExplorerChildren {
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ExplorerChildren::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ExplorerChildren::-webkit-scrollbar-track {
+  background: var(--Mantle);
+}
+
+.ExplorerChildren::-webkit-scrollbar-thumb {
+  background: var(--Surface2);
+  border-radius: 6px;
+  border: 2px solid var(--Mantle);
+}
+
+.ExplorerChildren::-webkit-scrollbar-thumb:hover {
+  background: var(--Overlay1);
+}
+
+.ExplorerChildren {
+  scrollbar-width: thin;
+  scrollbar-color: var(--Surface2) var(--Mantle);
 }
 
 .ExplorerFile {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 5px;
+  gap: 0px 5px;
   width: 100%;
   padding: 2.5px 8px;
   box-sizing: border-box;
@@ -249,15 +280,18 @@ input[type=number] {
 
 }
 
-.active, .PanelTitleItem {
-  color: var(--TextWhite);
-  background-color: var(--Surface0);
-  border-top: 1.5px solid var(--Blue);
+.PanelTitleItem {
+  padding: 4px 12px;
+  border-radius: 0;
+  border-top: 1.5px solid transparent;
+  color: var(--Subtext1);
+  background-color: transparent;
 }
 
-.PanelTitleItem {
-  padding: 4px 12px 4px 12px;
-  border-radius: 0;
+.PanelTitleItem.active {
+  color: var(--TextWhite);
+  background-color: var(--Surface0);
+  border-top-color: var(--Blue);
 }
 
 .Game {
@@ -410,4 +444,33 @@ input[type=number] {
   left: 10%;
   width: 80%;
   height: 70%;
+}
+
+.BottomPart {
+  position: absolute;
+  bottom: 0;
+  left: 260px;
+  right: 2px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--Surface0);
+  border: 1px solid var(--Overlay0);
+  box-sizing: border-box;
+}
+
+.BottomPart .PanelTitleBar {
+  flex-shrink: 0;
+}
+
+.ConsoleOutput {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px;
+  color: var(--Text);
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
 }

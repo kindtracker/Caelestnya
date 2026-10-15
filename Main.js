@@ -261,8 +261,7 @@ function CreateExplorerFile(Name, ClassName, Parent) {
   ExplorerFile.addEventListener("click", (Event) => {
     Event.stopPropagation();
 
-    const IsExpanded = CollapseText.textContent === "v";
-
+    const IsExpanded = CollapseText.textContent == "v";
     CollapseText.textContent = IsExpanded ? ">" : "v";
     Children.hidden = IsExpanded;
 
@@ -284,7 +283,7 @@ function SelectExplorerFile(File) {
   SelectedExplorerFile = File;
 
   document.querySelectorAll(".ExplorerFile").forEach((Item) => {
-    Item.classList.toggle("selected", Item === File);
+    Item.classList.toggle("selected", Item == File);
   });
 
   RenderProperties();
@@ -315,7 +314,7 @@ function RenderProperties() {
       );
     });
 
-    if (MatchingProperties.length === 0) continue;
+    if (MatchingProperties.length == 0) continue;
 
     const Section = document.createElement("div");
     Section.className = "Property";
@@ -356,7 +355,7 @@ function RenderProperties() {
       const Value = document.createElement("input");
       Value.className = "PropertyValue";
 
-      if (Property.Type === "checkbox") {
+      if (Property.Type == "checkbox") {
         Value.type = "checkbox";
         Value.checked = Boolean(Property.Get(SelectedExplorerFile));
       } else {
@@ -369,7 +368,7 @@ function RenderProperties() {
         if (!Property.Editable) return;
 
         const NewValue =
-          Property.Type === "checkbox" ? Value.checked : Value.value;
+          Property.Type == "checkbox" ? Value.checked : Value.value;
 
         Property.Set(SelectedExplorerFile, NewValue);
         RenderProperties();
@@ -382,7 +381,7 @@ function RenderProperties() {
     }
   }
 
-  if (VisibleProperties === 0) {
+  if (VisibleProperties == 0) {
     const Empty = document.createElement("div");
     Empty.className = "PropertyEmpty";
     Empty.textContent = "No matching properties.";
@@ -393,7 +392,9 @@ function RenderProperties() {
 function InitializePanelDragging() {
   document.querySelectorAll(".PanelDragHandle").forEach((Handle) => {
     Handle.addEventListener("pointerdown", (Event) => {
-      const Panel = Handle.closest(".Explorer, .Properties, .ToolBar");
+      const Panel = Handle.closest(
+        ".Explorer, .Properties, .ToolBar, .Game, .BottomPart",
+      );
 
       if (Event.button !== 0 || !Panel) return;
 
