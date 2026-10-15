@@ -222,14 +222,14 @@ const PropertyDefinitions = [
   },
 ];
 
-function CreateExplorerFile(Name, ClassName, Parent) {
+function CreateExplorerFile(Name, ClassName, IsFolder, Parent) {
   const ExplorerFile = document.createElement("div");
   ExplorerFile.className = "ExplorerFile";
   ExplorerFile.dataset.Name = Name;
 
   const CollapseText = document.createElement("div");
   CollapseText.className = "ExplorerFileCollapse";
-  CollapseText.textContent = ">";
+  CollapseText.textContent = IsFolder ? ">" : " ";
 
   const Icon = document.createElement("img");
   Icon.className = "ExplorerFileIcon";
@@ -245,6 +245,7 @@ function CreateExplorerFile(Name, ClassName, Parent) {
   ExplorerFile.append(CollapseText, Icon, Label, Children);
 
   if (Parent) {
+    Parent.querySelector(":scope > .ExplorerFileCollapse").textContent = ">";
     Parent.querySelector(":scope > .ExplorerFileChildren").appendChild(
       ExplorerFile,
     );
@@ -261,11 +262,15 @@ function CreateExplorerFile(Name, ClassName, Parent) {
   ExplorerFile.addEventListener("click", (Event) => {
     Event.stopPropagation();
 
-    const IsExpanded = CollapseText.textContent == "v";
-    CollapseText.textContent = IsExpanded ? ">" : "v";
-    Children.hidden = IsExpanded;
+    if (Event.target.closest(".ExplorerFileCollapse")) {
+      if (!IsFolder) return;
 
-    SelectExplorerFile(ExplorerFile);
+      const IsExpanded = CollapseText.textContent == "v";
+      CollapseText.textContent = IsExpanded ? ">" : "v";
+      Children.hidden = IsExpanded;
+    } else {
+      SelectExplorerFile(ExplorerFile);
+    }
   });
 
   const IconPath = `RobloxIcons/${ClassName}.png`;
@@ -436,30 +441,41 @@ function InitializePanelDragging() {
 }
 
 function InitializeExplorer() {
-  const Workspace = CreateExplorerFile("Workspace", "Workspace");
-  const Lighting = CreateExplorerFile("Lighting", "Lighting");
+  const Workspace = CreateExplorerFile("Workspace", "Workspace", true);
+  const Lighting = CreateExplorerFile("Lighting", "Lighting", true);
   const ReplicatedFirst = CreateExplorerFile(
     "ReplicatedFirst",
     "ReplicatedFirst",
+    true,
   );
   const ReplicatedStorage = CreateExplorerFile(
     "ReplicatedStorage",
     "ReplicatedStorage",
+    true,
   );
   const ServerScriptService = CreateExplorerFile(
     "ServerScriptService",
     "ServerScriptService",
+    true,
   );
-  const ServerStorage = CreateExplorerFile("ServerStorage", "ServerStorage");
-  const Players = CreateExplorerFile("Players", "Players");
-  const StarterPlayer = CreateExplorerFile("StarterPlayer", "StarterPlayer");
-  const StarterPack = CreateExplorerFile("StarterPack", "StarterPack");
-  const StarterGui = CreateExplorerFile("StarterGui", "StarterGui");
-  const CoreGui = CreateExplorerFile("CoreGui", "CoreGui");
-  const Chat = CreateExplorerFile("Chat", "Chat");
+  const ServerStorage = CreateExplorerFile(
+    "ServerStorage",
+    "ServerStorage",
+    true,
+  );
+  const Players = CreateExplorerFile("Players", "Players", true);
+  const StarterPlayer = CreateExplorerFile(
+    "StarterPlayer",
+    "StarterPlayer",
+    true,
+  );
+  const StarterPack = CreateExplorerFile("StarterPack", "StarterPack", true);
+  const StarterGui = CreateExplorerFile("StarterGui", "StarterGui", true);
+  const CoreGui = CreateExplorerFile("CoreGui", "CoreGui", true);
+  const Chat = CreateExplorerFile("Chat", "Chat", true);
 
   for (let Index = 0; Index < 7; Index++) {
-    CreateExplorerFile("kindtracker", "Player", Players);
+    CreateExplorerFile("kindtracker", "Player", false, Players);
   }
 }
 

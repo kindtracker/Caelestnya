@@ -8,6 +8,11 @@
 :root {
   --FontUI: "Noto Sans", sans-serif;
   --TextWhite: color-mix(in srgb, var(--Subtext1) 30%, white);
+  --Border: color-mix(in srgb, var(--Overlay1) 80%, #000);
+}
+
+:root[data-theme="latte"] {
+  --TextWhite: color-mix(in srgb, var(--Text) 75%, black);
 }
 
 body {
@@ -44,7 +49,7 @@ input[type=number] {
   height: 50%;
   background-color: var(--Surface0);
   font-weight: 500;
-  border: 1px solid color-mix(in srgb, var(--Overlay1) 80%, #000);
+  border: 1px solid var(--Border);
   box-sizing: border-box;
   flex-direction: column;
   overflow: hidden;
@@ -92,18 +97,6 @@ input[type=number] {
   font-size: var(--FontSize);
 }
 
-.ExplorerFileChildren {
-  display: block;
-  flex: 0 0 100%;
-  width: 100%;
-  padding-left: 16px;
-  box-sizing: border-box;
-}
-
-.ExplorerFileChildren[hidden] {
-  display: none !important;
-}
-
 .ExplorerFileIcon {
   width: var(--FontSize);
   height: var(--FontSize);
@@ -146,7 +139,7 @@ input[type=number] {
 .ExplorerFileChildren {
   display: block;
   width: 100%;
-  padding-left: 16px;
+  padding-left: 0px;
   box-sizing: border-box;
 }
 
@@ -163,7 +156,7 @@ input[type=number] {
   height: 28px;
   width: 100%;
   flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, var(--Overlay1) 80%, #000);
+  border: 1px solid var(--Border);
   padding-left: 0.5px;
 }
 
@@ -298,7 +291,7 @@ input[type=number] {
   position: absolute;
   top: 32px;
   left: calc(256px + 4px);
-  border: 1px solid color-mix(in srgb, var(--Overlay1) 80%, #000);
+  border: 1px solid var(--Border);
   width: calc(100vw - (256px + 4px) - 4px);
 }
 
@@ -313,7 +306,7 @@ input[type=number] {
   box-sizing: border-box;
   background-color: var(--Surface0);
   color: var(--Text);
-  border: 1px solid color-mix(in srgb, var(--Overlay1) 80%, #000);
+  border: 1px solid var(--Border);
   font-size: var(--FontSize);
 }
 
