@@ -6,19 +6,12 @@
     <title>Nyra</title>
     <link href="Catppuccin.css" rel="stylesheet">
     <link href="Style.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
   </head>
   <body>
-    <div class="MenuBar">
-      <div class="PanelDragHandle" title="Drag menu bar">⠿</div>
-
-      <button class="MenuBarButton">File</button>
-      <button class="MenuBarButton">Home</button>
-      <button class="MenuBarButton">Model</button>
-      <button class="MenuBarButton">Test</button>
-      <button class="MenuBarButton">View</button>
-      <button class="MenuBarButton">Plugins</button>
-    </div>
-
     <div class="ToolBar">
       <div class="PanelDragHandle" title="Drag toolbar">⠿</div>
 
@@ -115,6 +108,18 @@
         <span class="PanelTitleItem active">Console</span>
         <span class="PanelTitleItem">Asset Manager</span>
         <span class="PanelTitleItem">Animator</span>
+      </div>
+
+      <div class="SearchBar">
+        <button class="SearchBarButton" title="Clear logs">
+          <i class="fa-solid fa-eraser"></i>
+        </button>
+
+        <input
+          class="SearchBarInput"
+          type="search"
+          placeholder="Filter messages..."
+        >
       </div>
 
       <div class="ConsoleOutput"></div>
