@@ -30,7 +30,7 @@ const PropertyDefinitions = [
         Editable: false,
         Get: (File) => {
           const Parent = File.parentElement.closest(".ExplorerFile");
-          return Parent?.InstanceProperties.Name ?? "nil";
+          return Parent?.InstanceProperties.Name ?? "undefined";
         },
       },
     ],
@@ -291,6 +291,8 @@ function SelectExplorerFile(File) {
     Item.classList.toggle("selected", Item == File);
   });
 
+  PropertiesTable.scroll(0, 0);
+
   RenderProperties();
 }
 
@@ -442,12 +444,6 @@ function InitializePanelDragging() {
 
 function InitializeExplorer() {
   const Workspace = CreateExplorerFile("Workspace", "Workspace", true);
-  const Lighting = CreateExplorerFile("Lighting", "Lighting", true);
-  const ReplicatedFirst = CreateExplorerFile(
-    "ReplicatedFirst",
-    "ReplicatedFirst",
-    true,
-  );
   const ReplicatedStorage = CreateExplorerFile(
     "ReplicatedStorage",
     "ReplicatedStorage",
@@ -463,23 +459,34 @@ function InitializeExplorer() {
     "ServerStorage",
     true,
   );
-  const Players = CreateExplorerFile("Players", "Players", true);
-  const StarterPlayer = CreateExplorerFile(
-    "StarterPlayer",
-    "StarterPlayer",
-    true,
-  );
-  const StarterPack = CreateExplorerFile("StarterPack", "StarterPack", true);
-  const StarterGui = CreateExplorerFile("StarterGui", "StarterGui", true);
-  const CoreGui = CreateExplorerFile("CoreGui", "CoreGui", true);
-  const Chat = CreateExplorerFile("Chat", "Chat", true);
+  const Clients = CreateExplorerFile("Clients", "Players", true);
 
-  for (let Index = 0; Index < 7; Index++) {
-    CreateExplorerFile("kindtracker", "Player", false, Players);
-  }
+  CreateExplorerFile("kindtracker", "Player", false, Clients);
+
+  Explorer.addEventListener("client", () => {
+    SelectedExplorerFile = undefined;
+  });
+}
+
+function InitializeToolBar() {
+  const ToolBar = document.querySelectorAll(".ToolBarButton");
+  let SelectedTool = undefined;
+
+  ToolBar.forEach((Tool) => {
+    if (Tool.title == "Cursor") {
+      SelectedTool = Tool;
+    }
+
+    Tool.addEventListener("click", () => {
+      SelectedTool.classList.remove("active");
+      Tool.classList.add("active");
+      SelectedTool = Tool;
+    });
+  });
 }
 
 PropertiesSearch.addEventListener("input", RenderProperties);
 
 InitializePanelDragging();
 InitializeExplorer();
+InitializeToolBar();

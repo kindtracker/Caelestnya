@@ -9,6 +9,7 @@
   --FontUI: "Noto Sans", sans-serif;
   --TextWhite: color-mix(in srgb, var(--Subtext1) 30%, white);
   --Border: color-mix(in srgb, var(--Overlay1) 80%, #000);
+  --ExplorerWidth: 20%;
 }
 
 :root[data-theme="latte"] {
@@ -42,10 +43,15 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--Surface2) var(--Mantle);
+}
+
 .Explorer {
   --FontSize: 14px;
   display: flex;
-  width: 256px;
+  width: var(--ExplorerWidth);
   height: 50%;
   background-color: var(--Surface0);
   font-weight: 500;
@@ -62,29 +68,6 @@ input[type=number] {
   overflow-x: hidden;
 }
 
-.ExplorerChildren::-webkit-scrollbar {
-  width: 8px;
-}
-
-.ExplorerChildren::-webkit-scrollbar-track {
-  background: var(--Mantle);
-}
-
-.ExplorerChildren::-webkit-scrollbar-thumb {
-  background: var(--Surface2);
-  border-radius: 6px;
-  border: 2px solid var(--Mantle);
-}
-
-.ExplorerChildren::-webkit-scrollbar-thumb:hover {
-  background: var(--Overlay1);
-}
-
-.ExplorerChildren {
-  scrollbar-width: thin;
-  scrollbar-color: var(--Surface2) var(--Mantle);
-}
-
 .ExplorerFile {
   display: flex;
   flex-wrap: wrap;
@@ -95,6 +78,11 @@ input[type=number] {
   box-sizing: border-box;
   cursor: pointer;
   font-size: var(--FontSize);
+  border-radius: 0px;
+}
+
+.ExplorerFile:hover {
+  background-color: var(--Surface1);
 }
 
 .ExplorerFileIcon {
@@ -182,7 +170,7 @@ input[type=number] {
     hue-rotate(55deg) brightness(105%) contrast(90%);
 }
 
-.ToolBarButton:hover {
+.ToolBarButton:hover, .ToolBarButton.active {
   background-color: var(--Surface1);
 }
 
@@ -274,9 +262,9 @@ input[type=number] {
 }
 
 .PanelTitleItem {
-  padding: 4px 12px;
+  padding: 3px 12px;
   border-radius: 0;
-  border-top: 1.5px solid transparent;
+  border-top: 1px solid transparent;
   color: var(--Subtext1);
   background-color: transparent;
 }
@@ -289,17 +277,19 @@ input[type=number] {
 
 .Game {
   position: absolute;
-  top: 32px;
-  left: calc(256px + 4px);
+  top: 62px;
+  bottom: calc(var(--ConsoleHeight) + 2 * var(--PanelGap));
+  left: calc(var(--ExplorerWidth) + 4px);
+  right: 2px;
+  box-sizing: border-box;
   border: 1px solid var(--Border);
-  width: calc(100vw - (256px + 4px) - 4px);
 }
 
 .Properties {
   --FontSize: 13px;
   display: flex;
   flex-direction: column;
-  width: 256px;
+  width: var(--ExplorerWidth);
   height: 50%;
   flex-shrink: 0;
   overflow: hidden;
@@ -442,9 +432,9 @@ input[type=number] {
 .BottomPart {
   position: absolute;
   bottom: 0;
-  left: 260px;
+  left: calc(var(--ExplorerWidth) + 4px);
   right: 2px;
-  height: 220px;
+  height: 32px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -466,4 +456,37 @@ input[type=number] {
   font-family: monospace;
   font-size: 12px;
   white-space: pre-wrap;
+}
+
+.MenuBar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0 2px;
+  box-sizing: border-box;
+  background-color: var(--Mantle);
+  border-bottom: 1px solid var(--Overlay0);
+}
+
+.MenuBarButton {
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--Text);
+  font-family: var(--FontUI);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.MenuBarButton:hover {
+  background-color: var(--Surface1);
+}
+
+.MenuBarButton:focus-visible {
+  outline: 1px solid var(--Blue);
 }
