@@ -139,7 +139,7 @@ input[type=number] {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   background-color: var(--Surface0);
   height: 28px;
   width: 100%;
@@ -161,6 +161,34 @@ input[type=number] {
   cursor: pointer;
 }
 
+.fa-pause, .fa-play, .fa-square {
+  font-size: 18px;
+}
+
+.fa-play {
+  color: color-mix(in srgb, var(--Green) 75%, black) !important;
+}
+
+.fa-pause {
+  color: color-mix(in srgb, var(--Yellow) 75%, black) !important;
+}
+
+.fa-square {
+  color: color-mix(in srgb, var(--Red) 75%, black) !important;
+}
+
+.fa-play.active {
+  color: var(--Green) !important;
+}
+
+.fa-pause.active {
+  color: var(--Yellow) !important;
+}
+
+.fa-square.active {
+  color: var(--Red) !important;
+}
+
 .ToolBarButton img {
   width: 20px;
   height: 20px;
@@ -168,6 +196,14 @@ input[type=number] {
   filter: brightness(0) saturate(100%)
     invert(81%) sepia(18%) saturate(600%)
     hue-rotate(55deg) brightness(105%) contrast(90%);
+}
+
+.ToolBarRight {
+  position: absolute;
+  right: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .ToolBarButton:hover, .ToolBarButton.active {
@@ -258,7 +294,6 @@ input[type=number] {
   width: 16px;
   height: 100%;
   flex-shrink: 0;
-
 }
 
 .PanelTitleItem {
@@ -267,6 +302,7 @@ input[type=number] {
   border-top: 1px solid transparent;
   color: var(--Subtext1);
   background-color: transparent;
+  cursor: pointer;
 }
 
 .PanelTitleItem.active {
@@ -275,9 +311,13 @@ input[type=number] {
   border-top-color: var(--Blue);
 }
 
+.PanelTitleItem:hover {
+  background-color: var(--Surface1);
+}
+
 .Game {
   position: absolute;
-  top: 62px;
+  top: 32px;
   bottom: calc(var(--ConsoleHeight) + 2 * var(--PanelGap));
   left: calc(var(--ExplorerWidth) + 4px);
   right: 2px;
@@ -482,4 +522,10 @@ input[type=number] {
 .SearchBarButton:hover {
   background-color: var(--Surface2);
   color: var(--Text);
+}
+
+.ProfilePicture {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
 }
