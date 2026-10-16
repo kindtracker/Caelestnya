@@ -6,6 +6,8 @@ const ContextMenu = document.querySelector("#ContextMenu");
 const ExplorerItems = [];
 let SelectedExplorerFile = null;
 let HoveredExplorerFile = null;
+let CutExplorerFile = null;
+let CopyExplorerFile = null;
 let ContextMenuItem = null;
 let ExplorerScroll = 0;
 let ExplorerRows = [];
@@ -381,9 +383,32 @@ ContextMenu.addEventListener("contextmenu", (Event) => {
 ContextMenu.querySelectorAll(".ContextListItem").forEach((ContextItem) => {
   ContextItem.addEventListener("click", () => {
     if (!ContextMenuItem) return;
+    const File = ContextMenuItem;
 
-    if (ContextItem.textContent.trim() == "Delete") {
-      DeleteExplorerFile(ContextMenuItem);
+    if (ContextItem.innerHTML == "Cut") {
+      CutExplorerFile = File;
+    } else if (ContextItem.innerHTML == "Copy") {
+      CopyExplorerFile = File;
+    } else if (ContextItem.innerHTML == "Paste") {
+      if (CutExplorerFile) {
+        if (!SetParentOfExplorerFile(CutExplorerFile, File)) {
+          return false;
+        }
+
+        CutExplorerFile = null;
+      } else if (CopyExplorerFile) {
+        CreateExplorerFile(
+          CopyExplorerFile.Name,
+          CopyExplorerFile.ClassName,
+          CopyExplorerFile.IsFolder,
+          File,
+        );
+      }
+      RenderExplorer();
+    } else if (ContextItem.innerHTML == "Duplicate") {
+      CreateExplorerFile(File.Name, File.ClassName, File.IsFolder, File.Parent);
+    } else if (ContextItem.innerHTML == "Delete") {
+      DeleteExplorerFile(File);
     }
 
     ContextMenu.hidden = true;
