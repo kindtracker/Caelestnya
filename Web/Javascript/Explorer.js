@@ -173,10 +173,10 @@ function CreateExplorerFile(Name, ClassName, IsFolder, Parent = null) {
 
   const Icon = new Image();
   Item.Icon = Icon;
-  Icon.src = `RobloxIcons/${ClassName}.png`;
+  Icon.src = `/RobloxIcons/${ClassName}.png`;
   Icon.onerror = () => {
     Icon.onerror = null;
-    Icon.src = "RobloxIcons/Unknown.png";
+    Icon.src = "/RobloxIcons/Unknown.png";
   };
   Icon.onload = RenderExplorer;
 
