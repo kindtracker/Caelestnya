@@ -33,11 +33,18 @@ const PropertyDefinitions = [
 function RenderProperties() {
   PropertiesTable.replaceChildren();
 
+  const Car = document.createElement("img");
+  Car.title = "Car";
+  Car.className = "Car";
+  Car.src = "https://cataas.com/cat";
+
   if (!SelectedExplorerFile) {
     const Empty = document.createElement("div");
     Empty.className = "PropertyEmpty";
     Empty.textContent = "Select an instance to view its properties.";
+
     PropertiesTable.appendChild(Empty);
+    PropertiesTable.appendChild(Car);
     return;
   }
 
@@ -128,6 +135,8 @@ function RenderProperties() {
     Empty.textContent = "No matching properties.";
     PropertiesTable.appendChild(Empty);
   }
+
+  PropertiesTable.appendChild(Car);
 }
 
 PropertiesSearch.addEventListener("input", RenderProperties);

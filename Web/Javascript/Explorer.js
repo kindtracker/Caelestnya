@@ -332,12 +332,14 @@ ExplorerCanvas.addEventListener("click", (Event) => {
   const { X, Y } = GetPointerPosition(Event);
   const Row = GetExplorerRowAt(ExplorerY);
 
-  if (!Row) return;
+  if (!Row) {
+    SelectExplorerFile(null);
+    return;
+  }
 
   const { Item, Depth } = Row;
   const ArrowX = ExplorerStyle.Padding + Depth * ExplorerStyle.Indent;
 
-  console.log(ExplorerX, ExplorerCanvas.clientWidth - 28);
   if (X >= ExplorerCanvas.clientWidth - 28) {
     CreateList.hidden = false;
     CreateList.style.left = X + "px";
