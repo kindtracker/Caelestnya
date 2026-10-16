@@ -61,42 +61,13 @@ input[type=number] {
   overflow: hidden;
 }
 
-.ExplorerChildren {
+#ExplorerCanvas {
+  display: block;
   flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.ExplorerFile {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0px 5px;
   width: 100%;
-  padding: 2.5px 8px;
-  box-sizing: border-box;
-  cursor: pointer;
-  font-size: var(--FontSize);
-  border-radius: 0px;
-}
-
-.ExplorerFile:hover {
-  background-color: var(--Surface1);
-}
-
-.ExplorerFileIcon {
-  width: var(--FontSize);
-  height: var(--FontSize);
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.ExplorerFileCollapse {
-  width: 12px;
-  text-align: center;
-  color: var(--Subtext0);
-  font-weight: 1000;
+  min-height: 0;
+  cursor: default;
+  outline: none;
 }
 
 .SearchBar {

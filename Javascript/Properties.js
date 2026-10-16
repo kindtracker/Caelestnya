@@ -1,8 +1,5 @@
-const Explorer = document.querySelector(".ExplorerChildren");
 const PropertiesTable = document.querySelector(".PropertiesTable");
 const PropertiesSearch = document.querySelector(".SearchBarInput");
-
-let SelectedExplorerFile = null;
 
 const PropertyDefinitions = [
   {
@@ -29,7 +26,7 @@ const PropertyDefinitions = [
         Name: "Parent",
         Editable: false,
         Get: (File) => {
-          const Parent = File.parentElement.closest(".ExplorerFile");
+          const Parent = File.Parent;
           return Parent?.InstanceProperties.Name ?? "undefined";
         },
       },
@@ -222,80 +219,6 @@ const PropertyDefinitions = [
   },
 ];
 
-function CreateExplorerFile(Name, ClassName, IsFolder, Parent) {
-  const ExplorerFile = document.createElement("div");
-  ExplorerFile.className = "ExplorerFile";
-  ExplorerFile.dataset.Name = Name;
-
-  const CollapseText = document.createElement("div");
-  CollapseText.className = "ExplorerFileCollapse";
-  CollapseText.textContent = IsFolder ? ">" : " ";
-
-  const Icon = document.createElement("img");
-  Icon.className = "ExplorerFileIcon";
-  Icon.src = "RobloxIcons/Unknown.png";
-
-  const Label = document.createElement("span");
-  Label.textContent = Name;
-
-  const Children = document.createElement("div");
-  Children.className = "ExplorerFileChildren";
-  Children.hidden = true;
-
-  ExplorerFile.append(CollapseText, Icon, Label, Children);
-
-  if (Parent) {
-    Parent.querySelector(":scope > .ExplorerFileCollapse").textContent = ">";
-    Parent.querySelector(":scope > .ExplorerFileChildren").appendChild(
-      ExplorerFile,
-    );
-  } else {
-    Explorer.appendChild(ExplorerFile);
-  }
-
-  ExplorerFile.InstanceProperties = {
-    Name,
-    ClassName,
-    Archivable: true,
-  };
-
-  ExplorerFile.addEventListener("click", (Event) => {
-    Event.stopPropagation();
-
-    if (Event.target.closest(".ExplorerFileCollapse")) {
-      if (!IsFolder) return;
-
-      const IsExpanded = CollapseText.textContent == "v";
-      CollapseText.textContent = IsExpanded ? ">" : "v";
-      Children.hidden = IsExpanded;
-    } else {
-      SelectExplorerFile(ExplorerFile);
-    }
-  });
-
-  const IconPath = `RobloxIcons/${ClassName}.png`;
-
-  fetch(IconPath, { method: "HEAD" }).then((Response) => {
-    if (Response.ok) {
-      Icon.src = IconPath;
-    }
-  });
-
-  return ExplorerFile;
-}
-
-function SelectExplorerFile(File) {
-  SelectedExplorerFile = File;
-
-  document.querySelectorAll(".ExplorerFile").forEach((Item) => {
-    Item.classList.toggle("selected", Item == File);
-  });
-
-  PropertiesTable.scroll(0, 0);
-
-  RenderProperties();
-}
-
 function RenderProperties() {
   PropertiesTable.replaceChildren();
 
@@ -396,101 +319,4 @@ function RenderProperties() {
   }
 }
 
-function InitializePanelDragging() {
-  document.querySelectorAll(".PanelDragHandle").forEach((Handle) => {
-    Handle.addEventListener("pointerdown", (Event) => {
-      const Panel = Handle.closest(
-        ".Explorer, .Properties, .ToolBar, .Game, .BottomPart",
-      );
-
-      if (Event.button !== 0 || !Panel) return;
-
-      const StartX = Event.clientX;
-      const StartY = Event.clientY;
-      const Rect = Panel.getBoundingClientRect();
-
-      const OriginalStyle = {
-        position: Panel.style.position,
-        left: Panel.style.left,
-        top: Panel.style.top,
-        margin: Panel.style.margin,
-      };
-
-      Panel.style.position = "fixed";
-      Panel.style.left = `${Rect.left}px`;
-      Panel.style.top = `${Rect.top}px`;
-      Panel.style.margin = "0";
-
-      const Move = (Event) => {
-        Panel.style.left = `${Rect.left + Event.clientX - StartX}px`;
-        Panel.style.top = `${Rect.top + Event.clientY - StartY}px`;
-      };
-
-      const Stop = () => {
-        document.removeEventListener("pointermove", Move);
-
-        Panel.style.position = OriginalStyle.position;
-        Panel.style.left = OriginalStyle.left;
-        Panel.style.top = OriginalStyle.top;
-        Panel.style.margin = OriginalStyle.margin;
-      };
-
-      document.addEventListener("pointermove", Move);
-      document.addEventListener("pointerup", Stop, { once: true });
-      document.addEventListener("pointercancel", Stop, { once: true });
-    });
-  });
-}
-
-function InitializeExplorer() {
-  const Workspace = CreateExplorerFile("Workspace", "Workspace", true);
-  const ReplicatedStorage = CreateExplorerFile(
-    "ReplicatedStorage",
-    "ReplicatedStorage",
-    true,
-  );
-  const ServerScriptService = CreateExplorerFile(
-    "ServerScriptService",
-    "ServerScriptService",
-    true,
-  );
-  const ServerStorage = CreateExplorerFile(
-    "ServerStorage",
-    "ServerStorage",
-    true,
-  );
-  const Clients = CreateExplorerFile("Clients", "Players", true);
-
-  CreateExplorerFile("kindtracker", "Player", false, Clients);
-
-  Explorer.addEventListener("client", () => {
-    SelectedExplorerFile = undefined;
-  });
-}
-
-function InitializeToolBar() {
-  const ToolBar = document.querySelectorAll(".ToolBarButton");
-  let SelectedTool = undefined;
-
-  ToolBar.forEach((Tool) => {
-    if (["Run", "Pause", "Stop"].includes(Tool.title)) {
-      return;
-    }
-
-    if (Tool.title == "Cursor") {
-      SelectedTool = Tool;
-    }
-
-    Tool.addEventListener("click", () => {
-      SelectedTool.classList.remove("active");
-      Tool.classList.add("active");
-      SelectedTool = Tool;
-    });
-  });
-}
-
 PropertiesSearch.addEventListener("input", RenderProperties);
-
-InitializePanelDragging();
-InitializeExplorer();
-InitializeToolBar();
