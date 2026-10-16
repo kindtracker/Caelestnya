@@ -537,3 +537,33 @@ input[type=number] {
 .Error {
   accent-color: var(--Red);
 }
+
+.CreateList {
+  position: absolute;
+  z-index: 1000;
+  min-width: 150px;
+  padding: 4px;
+  background: var(--Surface0);
+  border: 1px solid var(--Surface1);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px #0004;
+}
+
+.CreateList[hidden] {
+  display: none;
+}
+
+.CreateListItem {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  color: var(--Text);
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.CreateListItem:hover {
+  background: var(--Surface1);
+}

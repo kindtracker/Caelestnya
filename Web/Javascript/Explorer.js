@@ -1,5 +1,6 @@
 const ExplorerCanvas = document.querySelector("#ExplorerCanvas");
 const ExplorerContext = ExplorerCanvas.getContext("2d");
+const CreateList = document.querySelector(".CreateList");
 
 const ExplorerItems = [];
 let SelectedExplorerFile = null;
@@ -242,7 +243,14 @@ ExplorerCanvas.addEventListener("click", (Event) => {
   const ArrowX = ExplorerStyle.Padding + Depth * ExplorerStyle.Indent;
 
   if (X >= ExplorerCanvas.clientWidth - 28) {
-    CreateExplorerFile("Part", "Part", false, Item);
+    CreateList.hidden = !CreateList.hidden;
+
+    if (!CreateList.hidden) {
+      CreateList.style.left = X + "px";
+      CreateList.style.top = Y + "px";
+      CreateList.ActiveItem = Item;
+    }
+
     return;
   }
 
@@ -253,6 +261,18 @@ ExplorerCanvas.addEventListener("click", (Event) => {
   }
 
   SelectExplorerFile(Item);
+});
+
+CreateList.querySelectorAll(".CreateListItem").forEach((CreateItem) => {
+  CreateItem.addEventListener("click", () => {
+    const ClassName = CreateItem.dataset.class;
+    const Parent = CreateList.ActiveItem;
+
+    if (!Parent) return;
+
+    CreateExplorerFile(ClassName, ClassName, false, Parent);
+    CreateList.hidden = true;
+  });
 });
 
 ExplorerCanvas.addEventListener(
