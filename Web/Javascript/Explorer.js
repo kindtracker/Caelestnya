@@ -1,10 +1,12 @@
 const ExplorerCanvas = document.querySelector("#ExplorerCanvas");
 const ExplorerContext = ExplorerCanvas.getContext("2d");
-const CreateList = document.querySelector(".CreateList");
+const CreateList = document.querySelector("#CreateList");
+const ContextMenu = document.querySelector("#ContextMenu");
 
 const ExplorerItems = [];
 let SelectedExplorerFile = null;
 let HoveredExplorerFile = null;
+let ContextMenuItem = null;
 let ExplorerScroll = 0;
 let ExplorerRows = [];
 
@@ -95,10 +97,10 @@ function RenderExplorer() {
     const { Item, Depth } = ExplorerRows[Index];
     const Y = Index * RowHeight - ExplorerScroll;
 
-    if (Item === SelectedExplorerFile) {
+    if (Item == SelectedExplorerFile) {
       Context.fillStyle = Colors.Selected;
       Context.fillRect(0, Y, Rect.width, RowHeight);
-    } else if (Item === HoveredExplorerFile) {
+    } else if (Item == HoveredExplorerFile) {
       Context.fillStyle = Colors.Hover;
       Context.fillRect(0, Y, Rect.width, RowHeight);
     }
@@ -139,7 +141,7 @@ function RenderExplorer() {
     Context.fillText(Item.Name, LabelX, Y + RowHeight / 2);
     Context.restore();
 
-    if (Item === HoveredExplorerFile) {
+    if (Item == HoveredExplorerFile) {
       Context.fillStyle = Colors.Muted;
       Context.textAlign = "center";
       Context.fillText("+", Rect.width - 14, Y + RowHeight / 2);
@@ -185,6 +187,76 @@ function CreateExplorerFile(Name, ClassName, IsFolder, Parent = null) {
   return Item;
 }
 
+function DeleteExplorerFile(File) {
+  if (!File) return false;
+
+  const Items = File.Parent ? File.Parent.Children : ExplorerItems;
+
+  const Index = Items.indexOf(File);
+
+  if (Index == -1) return false;
+
+  Items.splice(Index, 1);
+
+  function ClearSelection(Item) {
+    if (SelectedExplorerFile == Item) {
+      SelectedExplorerFile = null;
+    }
+
+    if (HoveredExplorerFile == Item) {
+      HoveredExplorerFile = null;
+    }
+
+    for (const Child of Item.Children) {
+      ClearSelection(Child);
+    }
+  }
+
+  ClearSelection(File);
+
+  PropertiesTable.scroll(0, 0);
+  RenderProperties();
+  RenderExplorer();
+
+  return true;
+}
+
+function SetParentOfExplorerFile(File, NewParent = null) {
+  if (!File) return false;
+  if (NewParent && !NewParent.IsFolder) return false;
+
+  let Current = NewParent;
+
+  while (Current) {
+    if (Current == File) return false;
+    Current = Current.Parent;
+  }
+
+  const OldItems = File.Parent ? File.Parent.Children : ExplorerItems;
+
+  const Index = OldItems.indexOf(File);
+
+  if (Index == -1) return false;
+  if (File.Parent == NewParent) return true;
+
+  OldItems.splice(Index, 1);
+
+  File.Parent = NewParent;
+
+  const NewItems = NewParent ? NewParent.Children : ExplorerItems;
+
+  NewItems.push(File);
+
+  if (NewParent) {
+    NewParent.Expanded = true;
+  }
+
+  RenderExplorer();
+  RenderProperties();
+
+  return true;
+}
+
 function SelectExplorerFile(File) {
   SelectedExplorerFile = File;
   RenderExplorer();
@@ -204,6 +276,13 @@ function GetExplorerPointerPosition(Event) {
   return {
     X: Event.clientX - Rect.left,
     Y: Event.clientY - Rect.top,
+  };
+}
+
+function GetPointerPosition(Event) {
+  return {
+    X: Event.clientX,
+    Y: Event.clientY,
   };
 }
 
@@ -233,9 +312,22 @@ ExplorerCanvas.addEventListener("pointerleave", () => {
   RenderExplorer();
 });
 
+CreateList.querySelectorAll(".ContextListItem").forEach((CreateItem) => {
+  CreateItem.addEventListener("click", () => {
+    const ClassName = CreateItem.dataset.class;
+    const Parent = CreateList.ActiveItem;
+
+    if (!Parent) return;
+
+    CreateExplorerFile(ClassName, ClassName, false, Parent);
+    CreateList.hidden = true;
+  });
+});
+
 ExplorerCanvas.addEventListener("click", (Event) => {
-  const { X, Y } = GetExplorerPointerPosition(Event);
-  const Row = GetExplorerRowAt(Y);
+  const { X: ExplorerX, Y: ExplorerY } = GetExplorerPointerPosition(Event);
+  const { X, Y } = GetPointerPosition(Event);
+  const Row = GetExplorerRowAt(ExplorerY);
 
   if (!Row) return;
 
@@ -254,7 +346,11 @@ ExplorerCanvas.addEventListener("click", (Event) => {
     return;
   }
 
-  if (Item.Children.length > 0 && X >= ArrowX && X <= ArrowX + 14) {
+  if (
+    Item.Children.length > 0 &&
+    ExplorerX >= ArrowX &&
+    ExplorerX <= ArrowX + 14
+  ) {
     Item.Expanded = !Item.Expanded;
     RenderExplorer();
     return;
@@ -263,15 +359,35 @@ ExplorerCanvas.addEventListener("click", (Event) => {
   SelectExplorerFile(Item);
 });
 
-CreateList.querySelectorAll(".CreateListItem").forEach((CreateItem) => {
-  CreateItem.addEventListener("click", () => {
-    const ClassName = CreateItem.dataset.class;
-    const Parent = CreateList.ActiveItem;
+ExplorerCanvas.addEventListener("contextmenu", (Event) => {
+  Event.preventDefault();
 
-    if (!Parent) return;
+  const { X, Y } = GetExplorerPointerPosition(Event);
+  const Row = GetExplorerRowAt(Y);
 
-    CreateExplorerFile(ClassName, ClassName, false, Parent);
-    CreateList.hidden = true;
+  if (!Row) return;
+
+  ContextMenuItem = Row.Item;
+
+  ContextMenu.hidden = false;
+  ContextMenu.style.left = Event.clientX + "px";
+  ContextMenu.style.top = Event.clientY + "px";
+});
+
+ContextMenu.addEventListener("contextmenu", (Event) => {
+  Event.preventDefault();
+});
+
+ContextMenu.querySelectorAll(".ContextListItem").forEach((ContextItem) => {
+  ContextItem.addEventListener("click", () => {
+    if (!ContextMenuItem) return;
+
+    if (ContextItem.textContent.trim() == "Delete") {
+      DeleteExplorerFile(ContextMenuItem);
+    }
+
+    ContextMenu.hidden = true;
+    ContextMenuItem = null;
   });
 });
 

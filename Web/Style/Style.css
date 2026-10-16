@@ -538,7 +538,7 @@ input[type=number] {
   accent-color: var(--Red);
 }
 
-.CreateList {
+.ContextList {
   position: absolute;
   z-index: 1000;
   min-width: 150px;
@@ -549,21 +549,22 @@ input[type=number] {
   box-shadow: 0 4px 12px #0004;
 }
 
-.CreateList[hidden] {
+.ContextList[hidden] {
   display: none;
 }
 
-.CreateListItem {
+.ContextListItem {
   display: block;
   width: 100%;
-  padding: 8px 12px;
+  padding: 4px 12px;
   color: var(--Text);
   text-align: left;
   background: transparent;
   border: none;
   cursor: pointer;
+  border-radius: 0px;
 }
 
-.CreateListItem:hover {
+.ContextListItem:hover {
   background: var(--Surface1);
 }
