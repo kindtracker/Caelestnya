@@ -161,6 +161,10 @@ input[type=number] {
   cursor: pointer;
 }
 
+.fa-cursor, .fa-arrows-up-down-left-right, .fa-rotate {
+  color: var(--Green) !important;
+}
+
 .fa-pause, .fa-play, .fa-square {
   font-size: 18px;
 }
@@ -474,7 +478,7 @@ input[type=number] {
   bottom: 0;
   left: calc(var(--ExplorerWidth) + 4px);
   right: 2px;
-  height: 256px;
+  height: 275px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -528,4 +532,37 @@ input[type=number] {
   width: 24px;
   height: 24px;
   margin-right: 4px;
+}
+
+.ConsoleConfiguration {
+  position: relative;
+  left: 4px;
+}
+
+.ConsoleConfig {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ConsoleSeparator {
+  color: var(--Overlay1);
+}
+
+.ConsoleConfigCheckBox {
+  width: 18px;
+  height: 18px;
+  accent-color: white;
+}
+
+.Info {
+  accent-color: var(--Blue);
+}
+
+.Warning {
+  accent-color: var(--Yellow);
+}
+
+.Error {
+  accent-color: var(--Red);
 }

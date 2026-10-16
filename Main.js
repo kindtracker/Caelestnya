@@ -473,7 +473,6 @@ function InitializeToolBar() {
   let SelectedTool = undefined;
 
   ToolBar.forEach((Tool) => {
-    console.log(Tool.title);
     if (["Run", "Pause", "Stop"].includes(Tool.title)) {
       return;
     }
