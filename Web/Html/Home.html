@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html data-theme="macchiato" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nyra - Home</title>
+    <link href="/Style/Catppuccin.css" rel="stylesheet">
+    <link href="/Style/Style.css" rel="stylesheet">
+    <link href="/Style/Home.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+  </head>
+  <body>
+    <div class="HomePage">
+      <aside class="Sidebar">
+        <div class="SidebarHeader">
+          <span>Nyra</span>
+        </div>
+
+        <nav class="SidebarNavigation">
+          <button class="SidebarItem active" data-page="Home">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+          </button>
+
+          <button class="SidebarItem" data-page="Home">
+            <i class="fa-solid fa-box-archive"></i>
+            <span>Archive</span>
+          </button>
+
+          <button class="SidebarItem" data-page="Home">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+          </button>
+        </nav>
+      </aside>
+
+      <main class="HomeContent">
+        <h1 id="PageTitle">Hello, kindtracker</h1>
+
+        <div class="SearchBar">
+          <input
+            class="SearchBarInput"
+            type="search"
+            placeholder="Search projects..."
+          >
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

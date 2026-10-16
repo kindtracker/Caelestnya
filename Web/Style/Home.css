@@ -1,0 +1,83 @@
+.HomePage {
+  display: flex;
+  min-height: 100vh;
+}
+
+.Sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--Base);
+  border-right: 2px solid var(--Surface0);
+  padding: 12px;
+  border-radius: 0px;
+}
+
+.SidebarHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 8px 22px;
+  font-weight: bold;
+  color: var(--Text);
+}
+
+.SidebarNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.SidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  background: transparent;
+  border: 1px solid var(--Border);
+  color: var(--Text);
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.SidebarItem:hover {
+  background: var(--Surface0);
+  color: var(--Text);
+}
+
+.SidebarItem.active {
+  background: var(--Surface1);
+  color: var(--Text);
+}
+
+.SidebarItem i {
+  width: 18px;
+  text-align: center;
+}
+
+.HomeContent {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+  background: var(--Base);
+  color: var(--TextWhite);
+}
+
+.SearchBar {
+  padding: 0px;
+}
+
+.SearchBarInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 7px;
+  font-size: 13px;
+  color: var(--TextWhite);
+  background-color: var(--Surface1);
+  border: 1px solid var(--Overlay0);
+  border-radius: 5px;
+  outline: none;
+  font-weight: 600;
+  font-size: 14px;
+}
