@@ -36,7 +36,6 @@
   padding: 11px 12px;
   background: transparent;
   border: 0;
-  border-radius: 4px;
   color: var(--TextWhite);
   text-align: left;
   cursor: pointer;
@@ -87,4 +86,58 @@
   outline: none;
   font-weight: 600;
   font-size: 14px;
+}
+
+.GameGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+  align-content: start;
+  margin-top: 32px;
+}
+
+.GameCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  background: var(--Surface0);
+  border: 1px solid var(--Surface1);
+  cursor: pointer;
+}
+
+.GameCard:hover {
+  background: var(--Surface1);
+}
+
+.GameIcon {
+  display: block;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.GameInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.GameName {
+  color: var(--TextWhite);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.GameCreator {
+  color: var(--Subtext0);
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

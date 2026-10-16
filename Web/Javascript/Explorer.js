@@ -493,6 +493,7 @@ new ResizeObserver(ResizeExplorerCanvas).observe(ExplorerCanvas);
 
 function InitializeExplorer() {
   const Workspace = CreateExplorerFile("Workspace", "Workspace", true);
+  const Clients = CreateExplorerFile("Clients", "Players", true);
   const ReplicatedStorage = CreateExplorerFile(
     "ReplicatedStorage",
     "ReplicatedStorage",
@@ -508,7 +509,6 @@ function InitializeExplorer() {
     "ServerStorage",
     true,
   );
-  const Clients = CreateExplorerFile("Clients", "Players", true);
 
   CreateExplorerFile("kindtracker", "Player", false, Clients);
 
