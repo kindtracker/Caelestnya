@@ -289,6 +289,28 @@ function GetPointerPosition(Event) {
   };
 }
 
+function CreateContextListItem(List, Name) {
+  const Icon = document.createElement("img");
+  Icon.className = "ContextListIcon";
+  Icon.src = `/RobloxIcons/${Name}.png`;
+  Icon.onerror = () => {
+    Icon.onerror = null;
+    Icon.src = "/RobloxIcons/Unknown.png";
+  };
+  Icon.onload = RenderExplorer;
+
+  const NameNode = document.createTextNode(Name);
+
+  const Item = document.createElement("button");
+  Item.className = "ContextListItem";
+  Item.dataset.class = Name;
+
+  Item.appendChild(Icon);
+  Item.appendChild(NameNode);
+
+  List.appendChild(Item);
+}
+
 ExplorerCanvas.addEventListener("pointermove", (Event) => {
   const { X, Y } = GetExplorerPointerPosition(Event);
   const Row = GetExplorerRowAt(Y);
@@ -313,18 +335,6 @@ ExplorerCanvas.addEventListener("pointerleave", () => {
   ExplorerCanvas.dataset.OverPlus = "false";
   ExplorerCanvas.style.cursor = "default";
   RenderExplorer();
-});
-
-CreateList.querySelectorAll(".ContextListItem").forEach((CreateItem) => {
-  CreateItem.addEventListener("click", () => {
-    const ClassName = CreateItem.dataset.class;
-    const Parent = CreateList.ActiveItem;
-
-    if (!Parent) return;
-
-    CreateExplorerFile(ClassName, ClassName, false, Parent);
-    CreateList.hidden = true;
-  });
 });
 
 ExplorerCanvas.addEventListener("click", (Event) => {
@@ -505,7 +515,26 @@ function InitializeExplorer() {
   ResizeExplorerCanvas();
 }
 
+function InitializeCreateList() {
+  CreateContextListItem(CreateList, "Part");
+  CreateContextListItem(CreateList, "Script");
+  CreateContextListItem(CreateList, "Folder");
+
+  CreateList.querySelectorAll(".ContextListItem").forEach((CreateItem) => {
+    CreateItem.addEventListener("click", () => {
+      const ClassName = CreateItem.dataset.class;
+      const Parent = CreateList.ActiveItem;
+
+      if (!Parent) return;
+
+      CreateExplorerFile(ClassName, ClassName, false, Parent);
+      CreateList.hidden = true;
+    });
+  });
+}
+
 InitializeExplorer();
+InitializeCreateList();
 
 window.addEventListener("resize", ResizeExplorerCanvas);
 window.SelectedExplorerFile = SelectedExplorerFile;

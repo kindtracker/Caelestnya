@@ -569,3 +569,9 @@ input[type=number] {
 .ContextListItem:hover {
   background: var(--Surface1);
 }
+
+.ContextListIcon {
+  position: relative;
+  top: 3px;
+  right: 6px;
+}
