@@ -62,7 +62,6 @@ function LoadProject() {
   Explorer.Render();
 }
 
-console.log(ProjectId);
 LoadProject();
 
 window.LoadProject = LoadProject;

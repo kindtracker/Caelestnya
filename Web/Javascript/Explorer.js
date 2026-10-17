@@ -378,16 +378,24 @@ ExplorerCanvas.addEventListener("click", (Event) => {
 ExplorerCanvas.addEventListener("contextmenu", (Event) => {
   Event.preventDefault();
 
-  const { X, Y } = GetExplorerPointerPosition(Event);
-  const Row = GetExplorerRowAt(Y);
+  const { X, Y } = GetPointerPosition(Event);
+  const { X: ExplorerX, Y: ExplorerY } = GetExplorerPointerPosition(Event);
+  const Row = GetExplorerRowAt(ExplorerY);
 
-  if (!Row) return;
+  if (!Row) {
+    CreateList.hidden = false;
+    CreateList.style.left = X + "px";
+    CreateList.style.top = Y + "px";
+    BlockCloseCreateList = true;
+
+    return;
+  }
 
   ContextMenuItem = Row.Item;
 
   ContextMenu.hidden = false;
-  ContextMenu.style.left = Event.clientX + "px";
-  ContextMenu.style.top = Event.clientY + "px";
+  ContextMenu.style.left = X + "px";
+  ContextMenu.style.top = Y + "px";
 });
 
 ExplorerCanvas.tabIndex = 0;
@@ -613,7 +621,6 @@ document.addEventListener("keyup", (Event) => {
 document.addEventListener("keydown", (Event) => {
   if (Event.ctrlKey && Event.key.toLowerCase() == "s") {
     Event.preventDefault();
-    console.log("d");
     window.SaveProject();
   }
 });
@@ -629,9 +636,6 @@ function InitializeCreateList() {
     CreateItem.addEventListener("click", () => {
       const ClassName = CreateItem.dataset.class;
       const Parent = CreateList.ActiveItem;
-
-      if (!Parent) return;
-
       CreateExplorerFile(ClassName, ClassName, false, Parent);
       CreateList.hidden = true;
     });
