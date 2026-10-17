@@ -1,5 +1,5 @@
-const UrlParams = new URLSearchParams(window.location.search);
-const ProjectId = UrlParams.get("ProjectId");
+UrlParams = new URLSearchParams(window.location.search);
+ProjectId = UrlParams.get("ProjectId");
 if (!ProjectId) {
   location = "/Html/Home.html";
 }

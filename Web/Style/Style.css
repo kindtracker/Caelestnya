@@ -121,15 +121,20 @@ input[type=number] {
 }
 
 .ToolBarButton {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   width: 28px;
+  min-width: 28px;
   height: 28px;
   padding: 4px;
+  flex-shrink: 0;
   border: none;
   border-radius: 4px;
   background: transparent;
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
 }
 
@@ -137,8 +142,12 @@ input[type=number] {
   color: var(--Green) !important;
 }
 
-.fa-pause, .fa-play, .fa-square {
+.fa-pause, .fa-play, .fa-square, .fa-gear {
   font-size: 18px;
+}
+
+.fa-gear {
+  color: color-mix(in srgb, var(--Lavender) 90%, black) !important;
 }
 
 .fa-play {
@@ -176,7 +185,7 @@ input[type=number] {
 
 .ToolBarRight {
   position: absolute;
-  right: 15px;
+  right: 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
