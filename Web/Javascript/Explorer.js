@@ -194,11 +194,8 @@ function DeleteExplorerFile(File) {
   if (!File) return false;
 
   const Items = File.Parent ? File.Parent.Children : ExplorerItems;
-
   const Index = Items.indexOf(File);
-
   if (Index == -1) return false;
-
   Items.splice(Index, 1);
 
   function ClearSelection(Item) {
@@ -215,7 +212,12 @@ function DeleteExplorerFile(File) {
     }
   }
 
+  const RowIndex = ExplorerRows.findIndex((Row) => Row.Item == File);
   ClearSelection(File);
+
+  try {
+    SelectedExplorerFile = ExplorerRows[RowIndex + 1].Item;
+  } catch (Error) {}
 
   PropertiesTable.scroll(0, 0);
   RenderProperties();
@@ -388,36 +390,155 @@ ExplorerCanvas.addEventListener("contextmenu", (Event) => {
   ContextMenu.style.top = Event.clientY + "px";
 });
 
+ExplorerCanvas.tabIndex = 0;
 ExplorerCanvas.addEventListener("keydown", (Event) => {
-  if (SelectedExplorerFile) {
-    if (Event.ctrlKey && Event.key.toLowerCase() == "c") {
-      Event.preventDefault();
-      CopyExplorerFile = SelectedExplorerFile;
-    }
+  if (
+    Event.target instanceof HTMLInputElement ||
+    Event.target instanceof HTMLTextAreaElement ||
+    Event.target.isContentEditable
+  ) {
+    return;
+  }
 
-    if (Event.ctrlKey && Event.key.toLowerCase() == "x") {
-      Event.preventDefault();
-      CutExplorerFile = SelectedExplorerFile;
-    }
+  const Key = Event.key.toLowerCase();
 
-    if (Event.ctrlKey && Event.key.toLowerCase() == "v") {
-      Event.preventDefault();
-      const Parent = SelectedExplorerFile.IsFolder
-        ? SelectedExplorerFile
-        : SelectedExplorerFile.Parent;
+  if (Event.ctrlKey && Key == "s") {
+    Event.preventDefault();
+    window.SaveProject();
+    return;
+  }
 
-      CreateExplorerFile(
+  if (Event.ctrlKey && Key == "c") {
+    if (!SelectedExplorerFile) return;
+    Event.preventDefault();
+    CopyExplorerFile = SelectedExplorerFile;
+    CutExplorerFile = null;
+    return;
+  }
+
+  if (Event.ctrlKey && Key == "x") {
+    if (!SelectedExplorerFile) return;
+    Event.preventDefault();
+    CutExplorerFile = SelectedExplorerFile;
+    CopyExplorerFile = null;
+    return;
+  }
+
+  if (Event.ctrlKey && Key == "v") {
+    if (!SelectedExplorerFile) return;
+    Event.preventDefault();
+
+    const Parent = SelectedExplorerFile.IsFolder
+      ? SelectedExplorerFile
+      : SelectedExplorerFile.Parent;
+
+    if (CutExplorerFile) {
+      if (SetParentOfExplorerFile(CutExplorerFile, Parent)) {
+        SelectExplorerFile(CutExplorerFile);
+        CutExplorerFile = null;
+      }
+    } else if (CopyExplorerFile) {
+      const Item = CreateExplorerFile(
         CopyExplorerFile.Name,
         CopyExplorerFile.ClassName,
         CopyExplorerFile.IsFolder,
         Parent,
       );
+      SelectExplorerFile(Item);
+    }
+    return;
+  }
+
+  if (Event.key == "ArrowUp" || Event.key == "ArrowDown") {
+    if (!ExplorerRows.length) return;
+    Event.preventDefault();
+
+    const RowIndex = ExplorerRows.findIndex(
+      (Row) => Row.Item == SelectedExplorerFile,
+    );
+
+    const NextIndex = Math.max(
+      0,
+      Math.min(
+        ExplorerRows.length - 1,
+        RowIndex == -1 ? 0 : RowIndex + (Event.key == "ArrowUp" ? -1 : 1),
+      ),
+    );
+
+    SelectExplorerFile(ExplorerRows[NextIndex].Item);
+
+    const RowTop = NextIndex * ExplorerStyle.RowHeight;
+    const RowBottom = RowTop + ExplorerStyle.RowHeight;
+
+    if (RowTop < ExplorerScroll) {
+      ExplorerScroll = RowTop;
+    } else if (RowBottom > ExplorerScroll + ExplorerCanvas.clientHeight) {
+      ExplorerScroll = RowBottom - ExplorerCanvas.clientHeight;
     }
 
-    if (Event.key == "Delete" && SelectedExplorerFile) {
-      Event.preventDefault();
-      DeleteExplorerFile(SelectedExplorerFile);
+    RenderExplorer();
+    return;
+  }
+
+  if (!SelectedExplorerFile) return;
+
+  if (Key == "a" && !Event.ctrlKey && !Event.altKey) {
+    Event.preventDefault();
+
+    const ClassName = Event.shiftKey ? "Folder" : "Part";
+    const Parent = SelectedExplorerFile.IsFolder
+      ? SelectedExplorerFile
+      : SelectedExplorerFile.Parent;
+
+    const Item = CreateExplorerFile(
+      ClassName,
+      ClassName,
+      ClassName == "Folder",
+      Parent,
+    );
+
+    SelectExplorerFile(Item);
+    return;
+  }
+
+  if (Key == "d" && !Event.ctrlKey && !Event.altKey) {
+    Event.preventDefault();
+    DeleteExplorerFile(SelectedExplorerFile);
+    return;
+  }
+
+  if (Event.key == "Delete") {
+    Event.preventDefault();
+    DeleteExplorerFile(SelectedExplorerFile);
+    return;
+  }
+
+  if (Event.key == "F2" || Event.key == "r") {
+    Event.preventDefault();
+
+    const Name = prompt("Rename instance:", SelectedExplorerFile.Name);
+
+    if (Name?.trim()) {
+      SelectedExplorerFile.Name = Name.trim();
+      SelectedExplorerFile.InstanceProperties.Name = Name.trim();
+      RenderExplorer();
+      RenderProperties();
     }
+    return;
+  }
+
+  if (Event.key == "Enter") {
+    if (SelectedExplorerFile.Children.length > 0) {
+      Event.preventDefault();
+      SelectedExplorerFile.Expanded = !SelectedExplorerFile.Expanded;
+      RenderExplorer();
+    }
+    return;
+  }
+
+  if (Event.key == "Backspace" && SelectedExplorerFile.Parent) {
+    Event.preventDefault();
+    SelectExplorerFile(SelectedExplorerFile.Parent);
   }
 });
 
