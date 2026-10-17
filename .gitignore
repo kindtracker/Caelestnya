@@ -1,3 +1,6 @@
 RobloxIcons
 Fonts
 .env
+.gradle
+build
+*.class
