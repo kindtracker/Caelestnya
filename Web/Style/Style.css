@@ -291,7 +291,7 @@ input[type=number] {
   background-color: var(--Surface1);
 }
 
-.Game {
+.Project {
   position: absolute;
   top: 32px;
   bottom: calc(var(--ConsoleHeight) + 2 * var(--PanelGap));

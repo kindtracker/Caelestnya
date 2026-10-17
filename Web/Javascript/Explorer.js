@@ -390,17 +390,17 @@ ExplorerCanvas.addEventListener("contextmenu", (Event) => {
 
 ExplorerCanvas.addEventListener("keydown", (Event) => {
   if (SelectedExplorerFile) {
-    if (Event.ctrlKey && Event.key.toLowerCase() === "c") {
+    if (Event.ctrlKey && Event.key.toLowerCase() == "c") {
       Event.preventDefault();
       CopyExplorerFile = SelectedExplorerFile;
     }
 
-    if (Event.ctrlKey && Event.key.toLowerCase() === "x") {
+    if (Event.ctrlKey && Event.key.toLowerCase() == "x") {
       Event.preventDefault();
       CutExplorerFile = SelectedExplorerFile;
     }
 
-    if (Event.ctrlKey && Event.key.toLowerCase() === "v") {
+    if (Event.ctrlKey && Event.key.toLowerCase() == "v") {
       Event.preventDefault();
       const Parent = SelectedExplorerFile.IsFolder
         ? SelectedExplorerFile
@@ -414,7 +414,7 @@ ExplorerCanvas.addEventListener("keydown", (Event) => {
       );
     }
 
-    if (Event.key === "Delete" && SelectedExplorerFile) {
+    if (Event.key == "Delete" && SelectedExplorerFile) {
       Event.preventDefault();
       DeleteExplorerFile(SelectedExplorerFile);
     }
@@ -489,31 +489,15 @@ document.addEventListener("keyup", (Event) => {
   ContextMenu.hidden = true;
 });
 
+document.addEventListener("keydown", (Event) => {
+  if (Event.ctrlKey && Event.key.toLowerCase() == "s") {
+    Event.preventDefault();
+    console.log("d");
+    window.SaveProject();
+  }
+});
+
 new ResizeObserver(ResizeExplorerCanvas).observe(ExplorerCanvas);
-
-function InitializeExplorer() {
-  const Workspace = CreateExplorerFile("Workspace", "Workspace", true);
-  const Clients = CreateExplorerFile("Clients", "Players", true);
-  const ReplicatedStorage = CreateExplorerFile(
-    "ReplicatedStorage",
-    "ReplicatedStorage",
-    true,
-  );
-  const ServerScriptService = CreateExplorerFile(
-    "ServerScriptService",
-    "ServerScriptService",
-    true,
-  );
-  const ServerStorage = CreateExplorerFile(
-    "ServerStorage",
-    "ServerStorage",
-    true,
-  );
-
-  CreateExplorerFile("kindtracker", "Player", false, Clients);
-
-  ResizeExplorerCanvas();
-}
 
 function InitializeCreateList() {
   CreateContextListItem(CreateList, "Part");
@@ -533,8 +517,16 @@ function InitializeCreateList() {
   });
 }
 
-InitializeExplorer();
 InitializeCreateList();
 
+ResizeExplorerCanvas();
 window.addEventListener("resize", ResizeExplorerCanvas);
 window.SelectedExplorerFile = SelectedExplorerFile;
+
+window.Explorer = {
+  Items: ExplorerItems,
+  CreateFile: CreateExplorerFile,
+  DeleteFile: DeleteExplorerFile,
+  SetParent: SetParentOfExplorerFile,
+  Render: RenderExplorer,
+};

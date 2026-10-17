@@ -1,20 +1,20 @@
-const GameGrid = document.querySelector(".GameGrid");
+const ProjectGrid = document.querySelector(".ProjectGrid");
 const NewProjectButton = document.querySelector(".SearchBarButton");
 
-function AddGameCard(Game) {
-  const GameCard = document.createElement("a");
-  GameCard.className = "GameCard";
-  GameCard.href = "/Html/Studio.html?GameId=" + Game.Id;
+function AddProjectCard(Project) {
+  const ProjectCard = document.createElement("a");
+  ProjectCard.className = "ProjectCard";
+  ProjectCard.href = "/Html/Studio.html?ProjectId=" + Project.Id;
 
-  GameCard.innerHTML = `
-    <img class="GameIcon" src="/Api/Images/${((Game.Id - 1) % 10) + 1}">
-    <div class="GameInfo">
-      <span class="GameName">${Game.Name}</span>
-      <span class="GameCreator"><i class="fa-solid fa-user"></i> ${Game.CreatorName}</span>
+  ProjectCard.innerHTML = `
+    <img class="ProjectIcon" src="/Api/Images/${((Project.Id - 1) % 10) + 1}">
+    <div class="ProjectInfo">
+      <span class="ProjectName">${Project.Name}</span>
+      <span class="ProjectCreator"><i class="fa-solid fa-user"></i> ${Project.CreatorName}</span>
     </div>
   `;
 
-  GameGrid.appendChild(GameCard);
+  ProjectGrid.appendChild(ProjectCard);
 }
 
 NewProjectButton.addEventListener("click", () => {
@@ -29,16 +29,16 @@ NewProjectButton.addEventListener("click", () => {
   Projects.push(NewProject);
 
   localStorage.setItem("Projects", JSON.stringify(Projects));
-  InitializeGameGrid();
+  InitializeProjectGrid();
 });
 
-function InitializeGameGrid() {
-  GameGrid.replaceChildren();
+function InitializeProjectGrid() {
+  ProjectGrid.replaceChildren();
   const Projects = JSON.parse(localStorage.getItem("Projects") || "[]");
 
   for (const Project of Projects) {
-    AddGameCard(Project);
+    AddProjectCard(Project);
   }
 }
 
-InitializeGameGrid();
+InitializeProjectGrid();

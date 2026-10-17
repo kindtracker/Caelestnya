@@ -110,7 +110,7 @@ body {
   white-space: nowrap;
 }
 
-.GameGrid {
+.ProjectGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 16px;
@@ -118,7 +118,7 @@ body {
   margin-top: 32px;
 }
 
-.GameCard {
+.ProjectCard {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -130,24 +130,24 @@ body {
   text-decoration: none;
 }
 
-.GameCard:hover {
+.ProjectCard:hover {
   background: var(--Surface1);
 }
 
-.GameIcon {
+.ProjectIcon {
   display: block;
   aspect-ratio: 1;
   object-fit: cover;
 }
 
-.GameInfo {
+.ProjectInfo {
   display: flex;
   flex-direction: column;
   gap: 4px;
   min-width: 0;
 }
 
-.GameName {
+.ProjectName {
   color: var(--TextWhite);
   font-size: 14px;
   font-weight: 600;
@@ -157,7 +157,7 @@ body {
   margin-bottom: 4px;
 }
 
-.GameCreator {
+.ProjectCreator {
   color: var(--Subtext0);
   font-size: 12px;
   overflow: hidden;
