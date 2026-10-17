@@ -1,6 +1,10 @@
+body {
+  overflow: visible;
+}
+
 .HomePage {
   display: flex;
-  min-height: 100vh;
+  height: 10000vh;
 }
 
 .Sidebar {
@@ -72,6 +76,7 @@
 
 .SearchBar {
   padding: 0px;
+  display: flex;
 }
 
 .SearchBarInput {
@@ -86,6 +91,23 @@
   outline: none;
   font-weight: 600;
   font-size: 14px;
+  margin-right: 8px;
+}
+
+.SearchBarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  height: 34px;
+  padding: 0 12px;
+  flex-shrink: 0;
+  border: 1px solid var(--Overlay0);
+  background-color: var(--Surface1);
+  color: var(--TextWhite);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .GameGrid {
@@ -105,6 +127,7 @@
   background: var(--Surface0);
   border: 1px solid var(--Surface1);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .GameCard:hover {
